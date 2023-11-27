@@ -1,0 +1,90 @@
+# Cargo in Rust: A brief overview
+
+Cargo, Rust's versatile build system and package manager, streamlines project management for 'Rustaceans'. Handling code compilation, library downloads, and project organization, Cargo simplifies tasks as projects evolve. While basic projects may lack dependencies, as complexity grows, Cargo becomes a great utility.
+
+To create new Rust project,
+
+```console
+# binary
+cargo new foo
+
+# library
+cargo new --lib foo
+```
+
+In Rust, code is organized into units called "crates". A create can consist of one or more modules, and each module can contain functions, structs, enums, etc. When you compile code in Rust, the compiler typically operates on one crate at at a time. A crate can manifest either as a binary crate or a library crate.
+
+* Binary crates produce executable programs and require a main function as the entry point.
+* Library crates provide reusable code components that can be shared among different projects.
+
+A package can contain as many binary crates as you like, but at most only one library crate. A package must contain at least one crate, whether that’s a library or binary crate.
+
+So, a crate is basically the "smallest unit of code" in Rust. In other words, the level at which the compiler treats the code independently. It's a way to conceptualize how Rust organizes and processes code during compilation, with crates being the fundamental units that encapsulate various code entities.
+
+For now on, we are going to work with a binary crate, rather than a library, but all of the concepts are the same.
+
+After the above commands, you should see a file hierarchy like this:
+
+```txt
+.
+└── foo
+    ├── Cargo.toml
+    └── src
+        └── main.rs
+```
+
+The `main.rs` is the root source file for your new `foo` project -- nothing new there.
+The `Cargo.toml` is the config file for `cargo` for this project. If you
+look inside it, you should see something like this:
+
+```toml
+[package]
+name = "foo"
+version = "0.1.0"
+authors = ["john"]
+
+[dependencies]
+```
+
+* The `name` field under `[package]` determines the name of the project. This is
+used by `crates.io` if you publish the crate (more later). It is also the name
+of the output binary when you compile.
+
+* The `version` field is a crate version number using [Semantic
+Versioning](http://semver.org/).
+
+* The `authors` field is a list of authors used when publishing the crate.
+
+* The `[dependencies]` section lets you add dependencies for your project. [crates.io](https://crates.io) is the Rust community’s central package registry that serves as a location to discover and download packages. `cargo` is configured to use it by default to find requested packages and supports [many types of dependencies][dependencies].
+
+```toml
+[package]
+name = "foo"
+version = "0.1.0"
+authors = ["john"]
+
+[dependencies]
+time = "0.1.12"
+```
+
+Here, we have a package that only contains src/main.rs, meaning it only contains a binary crate named `foo`. If a package contains src/main.rs and src/lib.rs, it has two crates: a binary and a library, both with the same name as the package. A package can have multiple binary crates by placing files in the src/bin directory: each file will be a separate binary crate.
+
+To build our project we can execute `cargo build` anywhere in the project
+directory (including subdirectories!). We can also do `cargo run` to build and
+run. Notice that these commands will resolve all dependencies, download crates
+if needed, and build everything, including your crate. (Note that it only
+rebuilds what it has not already built, similar to `make`).
+
+Summary:
+
+* We can create a project using `cargo new`.
+* We can build a project using `cargo build`.
+* We can build and run a project in one step using `cargo run`.
+* We can build a project without producing a binary to check for errors using
+  `cargo check`.
+* Instead of saving the result of the build in the same directory as our code,
+  Cargo stores it in the *target/debug* directory.
+
+
+[manifest]: https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
