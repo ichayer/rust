@@ -4,6 +4,10 @@ Every value in Rust is of a certain data type, which tells Rust what kind of dat
 so it knows how to work with that data. Rust is a statically typed language, 
 which means that it must know the types of all variables at compile time.
 
+The types covered here are of a known size, so they can be pushed on the stack and popped 
+off the stack when their scope is over, and can be quickly and trivially 
+copied to make a new, independent instance if another part of code needs to use the same value in a different scope.
+
 ## Scalar Types
 
 ### Integer
