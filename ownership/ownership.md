@@ -36,7 +36,7 @@ and cleaning up unused data on the heap so you don’t run out of space are all 
 
 ## Rules explanation
 
-We've explored the storage of [primitives](../primitives.md) in the stack due to their known size. 
+We've explored the storage of [primitives](../types/primitives.md) in the stack due to their known size. 
 Additionally, we've delved into the [scope of variables](../variable_binding/scope.md). Let's try to understand
 now how ownership is established for variables stored in the heap, considering their scope.
 We’ll concentrate on the parts of String that relate to ownership. 
